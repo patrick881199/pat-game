@@ -13,20 +13,43 @@ const Home = () => {
     dispatch(getGames());
   }, [dispatch]);
 
-  const upcomingGamesSection = upcomingGames.map((game) => {
-    return (
-      <Card key={game.id}>
-        <h3>{game.name}</h3>
-        <p>{game.released}</p>
-        <img src={game.background_image} alt="" />
-      </Card>
-    );
-  });
+  const imageResize = (url, size) => {
+    const pattern = /media\/games/;
+    let index = 0;
+    if (pattern.test(url)) {
+      index = url.indexOf("/games");
+      return `${url.substr(0, index)}/resize/${size}/-${url.substr(index)}`;
+    } else {
+      index = url.indexOf("/screenshots");
+      return `${url.substr(0, index)}/resize/${size}/-${url.substr(index)}`;
+    }
+  };
+
+  const gameList = (list) =>
+    list.map((game) => {
+      return (
+        <Card key={game.id}>
+          <h3>{game.name}</h3>
+          <p>{game.released}</p>
+          <img src={imageResize(game.background_image, 640)} alt="" />
+        </Card>
+      );
+    });
+
+  const upcomingGamesSection = gameList(upcomingGames);
+
+  const popularGamesSection = gameList(popularGames);
+
+  const newGamesSection = gameList(newGames);
 
   return (
     <StyledHome>
       <h2>Upcoming Games</h2>
       <Cards>{upcomingGamesSection}</Cards>
+      <h2>Popular Games</h2>
+      <Cards>{popularGamesSection}</Cards>
+      <h2>New Games</h2>
+      <Cards>{newGamesSection}</Cards>
     </StyledHome>
   );
 };
