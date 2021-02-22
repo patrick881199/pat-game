@@ -30,6 +30,9 @@ export const newGameURL = `https://api.rawg.io/api/games?page_size=10&dates=${
 
 //game detail
 //https://api.rawg.io/api/games/303576
+export const gameDetailURL = (id) => `https://api.rawg.io/api/games/${id}`;
 
 //game screenshots
 //https://api.rawg.io/api/games/303576/screenshots
+export const gameScreenshotURL = (id) =>
+  `https://api.rawg.io/api/games/${id}/screenshots`;

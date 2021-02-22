@@ -1,10 +1,14 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getGames } from "../store/actions/gamesAction";
+import { getGameDetail } from "../store/actions/gameDetailAction";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 
+import { Link, useHistory } from "react-router-dom";
+
 const Home = () => {
+  const history = useHistory();
   const dispatch = useDispatch();
   const gamesList = useSelector((state) => state.gamesList);
   const { upcomingGames, newGames, popularGames } = gamesList;
@@ -12,6 +16,11 @@ const Home = () => {
   useEffect(() => {
     dispatch(getGames());
   }, [dispatch]);
+
+  const clickCardHandler = (id) => {
+    dispatch(getGameDetail(id));
+    //history.push(`/game/${id}`);
+  };
 
   const imageResize = (url, size) => {
     const pattern = /media\/games/;
@@ -28,11 +37,13 @@ const Home = () => {
   const gameList = (list) =>
     list.map((game) => {
       return (
-        <Card key={game.id}>
-          <h3>{game.name}</h3>
-          <p>{game.released}</p>
-          <img src={imageResize(game.background_image, 640)} alt="" />
-        </Card>
+        <Link to={`/game/${game.id}`}>
+          <Card key={game.id} onClick={() => clickCardHandler(game.id)}>
+            <h3>{game.name}</h3>
+            <p>{game.released}</p>
+            <img src={imageResize(game.background_image, 640)} alt="" />
+          </Card>
+        </Link>
       );
     });
 
@@ -79,6 +90,7 @@ const Card = styled(motion.div)`
     object-fit: cover;
   }
   margin: 3rem;
+  cursor: pointer;
 `;
 
 export default Home;
