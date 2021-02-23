@@ -5,8 +5,10 @@ import { getGameDetail } from "../store/actions/gameDetailAction";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import GameDetail from "./GameDetail";
+import { imageResize } from "../util";
+import Loading from "./Loading";
 
 const Home = () => {
   const history = useHistory();
@@ -26,18 +28,6 @@ const Home = () => {
     history.push(`/game/${id}`);
   };
 
-  const imageResize = (url, size) => {
-    const pattern = /media\/games/;
-    let index = 0;
-    if (pattern.test(url)) {
-      index = url.indexOf("/games");
-      return `${url.substr(0, index)}/resize/${size}/-${url.substr(index)}`;
-    } else {
-      index = url.indexOf("/screenshots");
-      return `${url.substr(0, index)}/resize/${size}/-${url.substr(index)}`;
-    }
-  };
-
   const gameList = (list) =>
     list.map((game) => {
       return (
@@ -55,9 +45,13 @@ const Home = () => {
 
   const newGamesSection = gameList(newGames);
 
+  const path = useLocation().pathname;
+  const isGameDetailPath = path.includes("game");
+
   return (
     <>
-      {gameDetailReady && <GameDetail />}
+      {!isGameDetailPath ? "" : gameDetailReady ? <GameDetail /> : <Loading />}
+
       <StyledHome style={{ height: gameDetailReady ? "100vh" : "" }}>
         <h2>Upcoming Games</h2>
         <Cards>{upcomingGamesSection}</Cards>

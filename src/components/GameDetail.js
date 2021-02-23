@@ -10,10 +10,12 @@ import {
   faGamepad,
   faStar as sStar,
   faStarHalfAlt as hStar,
+  faSpinner,
 } from "@fortawesome/free-solid-svg-icons";
 import { faPlaystation, faXbox } from "@fortawesome/free-brands-svg-icons";
 import { faStar as eStar } from "@fortawesome/free-regular-svg-icons";
 import { SET_RETURNED_FALSE } from "../store/types";
+import { imageResize } from "../util";
 const GameDetail = () => {
   const playstation = <FontAwesomeIcon icon={faPlaystation} />;
   const xbox = <FontAwesomeIcon icon={faXbox} />;
@@ -23,6 +25,8 @@ const GameDetail = () => {
   const solidStar = <FontAwesomeIcon icon={sStar} />;
   const harfStar = <FontAwesomeIcon icon={hStar} />;
   const emptyStar = <FontAwesomeIcon icon={eStar} />;
+
+  const Spinner = <FontAwesomeIcon icon={faSpinner} spin />;
 
   const gameInfo = useSelector((state) => state.gameInfo);
   const gameDetail = gameInfo.gameDetail;
@@ -54,7 +58,7 @@ const GameDetail = () => {
   const platforms = filteredIconList(gameDetail.platforms);
   const description = parse(gameDetail.description);
   const screenshots = gameScreenshots.results.map((screenshot) => (
-    <img src={screenshot.image} />
+    <img src={imageResize(screenshot.image, 1280)} />
   ));
 
   const rating = gameDetail.rating;
@@ -93,7 +97,8 @@ const GameDetail = () => {
             <PlarformsIcon>{platforms}</PlarformsIcon>
           </Plarforms>
         </Title>
-        <img src={gameDetail.background_image} alt="" />
+
+        <img src={imageResize(gameDetail.background_image, 1280)} alt="" />
         {description}
         {screenshots}
       </Content>
