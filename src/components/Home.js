@@ -19,7 +19,7 @@ const Home = () => {
 
   const clickCardHandler = (id) => {
     dispatch(getGameDetail(id));
-    //history.push(`/game/${id}`);
+    history.push(`/game/${id}`);
   };
 
   const imageResize = (url, size) => {
@@ -37,13 +37,11 @@ const Home = () => {
   const gameList = (list) =>
     list.map((game) => {
       return (
-        <Link to={`/game/${game.id}`}>
-          <Card key={game.id} onClick={() => clickCardHandler(game.id)}>
-            <h3>{game.name}</h3>
-            <p>{game.released}</p>
-            <img src={imageResize(game.background_image, 640)} alt="" />
-          </Card>
-        </Link>
+        <Card key={game.id} onClick={() => clickCardHandler(game.id)}>
+          <h3>{game.name}</h3>
+          <p>{game.released}</p>
+          <img src={imageResize(game.background_image, 640)} alt="" />
+        </Card>
       );
     });
 
