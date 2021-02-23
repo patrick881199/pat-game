@@ -10,11 +10,8 @@ function App() {
 
       <Router>
         <Switch>
-          <Route path="/" exact>
+          <Route path="/">
             <Home />
-          </Route>
-          <Route path="/game">
-            <GameDetail />
           </Route>
         </Switch>
       </Router>

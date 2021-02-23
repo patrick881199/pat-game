@@ -48,50 +48,55 @@ const GameDetail = () => {
     });
   };
 
-  //const gameDetail = gameDetails.game;
-  let platforms = [];
-  let description = null;
-  let screenshots = null;
-  let rating = null;
   const ratingStars = [];
-  if (gameInfo.returned) {
-    platforms = filteredIconList(gameDetail.platforms);
-    description = parse(gameDetail.description);
-    screenshots = gameScreenshots.results.map((screenshot) => (
-      <img src={screenshot.image} />
-    ));
 
-    rating = gameDetail.rating;
-    for (let i = 0; i < 5; i++) {
-      if (rating - i > 0.5 && rating - i < 1) {
-        ratingStars.push(harfStar);
-      } else if (rating - i >= 1) {
-        ratingStars.push(solidStar);
-      } else {
-        ratingStars.push(emptyStar);
-      }
+  const platforms = filteredIconList(gameDetail.platforms);
+  const description = parse(gameDetail.description);
+  const screenshots = gameScreenshots.results.map((screenshot) => (
+    <img src={screenshot.image} />
+  ));
+
+  const rating = gameDetail.rating;
+  for (let i = 0; i < 5; i++) {
+    if (rating - i > 0.5 && rating - i < 1) {
+      ratingStars.push(harfStar);
+    } else if (rating - i >= 1) {
+      ratingStars.push(solidStar);
+    } else {
+      ratingStars.push(emptyStar);
     }
   }
 
   return (
     <StyledGameDetail>
-      {gameInfo.returned && (
-        <Content>
-          <h2>{gameDetail.name}</h2>
-          <p>{gameDetail.rating}</p>
-          {ratingStars}
-          {platforms}
-          <img src={gameDetail.background_image} alt="" />
-          {description}
-          {screenshots}
-        </Content>
-      )}
+      <Content>
+        <Title>
+          <div className="info">
+            <h2>{gameDetail.name}</h2>
+            <p>{gameDetail.rating}</p>
+            <Stars>{ratingStars}</Stars>
+          </div>
+          <Plarforms>
+            <h3>Platforms</h3>
+            <PlarformsIcon>{platforms}</PlarformsIcon>
+          </Plarforms>
+        </Title>
+        <img src={gameDetail.background_image} alt="" />
+        {description}
+        {screenshots}
+      </Content>
     </StyledGameDetail>
   );
 };
 
 const StyledGameDetail = styled(motion.div)`
   background-color: rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: scroll;
 `;
 
 const Content = styled(motion.div)`
@@ -104,4 +109,24 @@ const Content = styled(motion.div)`
   }
 `;
 
+const Title = styled(motion.div)`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const Stars = styled(motion.div)`
+  font-size: 2.5rem;
+`;
+
+const PlarformsIcon = styled(motion.div)`
+  flex: 1 1 20rem;
+  font-size: 2.5rem;
+  .svg-inline--fa {
+    margin: 0rem 1rem;
+  }
+`;
+
+const Plarforms = styled(motion.div)`
+  text-align: center;
+`;
 export default GameDetail;

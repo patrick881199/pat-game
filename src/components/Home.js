@@ -6,12 +6,16 @@ import styled from "styled-components";
 import { motion } from "framer-motion";
 
 import { Link, useHistory } from "react-router-dom";
+import GameDetail from "./GameDetail";
 
 const Home = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const gamesList = useSelector((state) => state.gamesList);
   const { upcomingGames, newGames, popularGames } = gamesList;
+
+  const gameInfo = useSelector((state) => state.gameInfo);
+  const gameDetailReady = gameInfo.returned;
 
   useEffect(() => {
     dispatch(getGames());
@@ -52,14 +56,17 @@ const Home = () => {
   const newGamesSection = gameList(newGames);
 
   return (
-    <StyledHome>
-      <h2>Upcoming Games</h2>
-      <Cards>{upcomingGamesSection}</Cards>
-      <h2>Popular Games</h2>
-      <Cards>{popularGamesSection}</Cards>
-      <h2>New Games</h2>
-      <Cards>{newGamesSection}</Cards>
-    </StyledHome>
+    <>
+      {gameDetailReady && <GameDetail />}
+      <StyledHome>
+        <h2>Upcoming Games</h2>
+        <Cards>{upcomingGamesSection}</Cards>
+        <h2>Popular Games</h2>
+        <Cards>{popularGamesSection}</Cards>
+        <h2>New Games</h2>
+        <Cards>{newGamesSection}</Cards>
+      </StyledHome>
+    </>
   );
 };
 
