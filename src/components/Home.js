@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getGames } from "../store/actions/gamesAction";
 import { getGameDetail } from "../store/actions/gameDetailAction";
@@ -58,7 +58,7 @@ const Home = () => {
   return (
     <>
       {gameDetailReady && <GameDetail />}
-      <StyledHome>
+      <StyledHome style={{ height: gameDetailReady ? "100vh" : "" }}>
         <h2>Upcoming Games</h2>
         <Cards>{upcomingGamesSection}</Cards>
         <h2>Popular Games</h2>
@@ -71,6 +71,7 @@ const Home = () => {
 };
 
 const StyledHome = styled(motion.div)`
+  overflow: hidden;
   width: 90%;
   margin: auto;
   h2 {

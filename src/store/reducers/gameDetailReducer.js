@@ -1,4 +1,4 @@
-import { GET_DETAIL } from "../types";
+import { GET_DETAIL, SET_RETURNED_FALSE } from "../types";
 
 const initialState = {
   returned: false,
@@ -10,6 +10,11 @@ const gameDetailReducer = (state = initialState, action) => {
       return {
         returned: true,
         ...action.payload,
+      };
+    case SET_RETURNED_FALSE:
+      return {
+        ...state,
+        returned: false,
       };
 
     default:

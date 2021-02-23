@@ -3,3 +3,5 @@ export const USERS_ERROR = "USERS_ERROR";
 
 export const GET_GAMES = "GET_GAMES";
 export const GET_DETAIL = "GET_DETAIL";
+
+export const SET_RETURNED_FALSE = "SET_RETURNED_FALSE";

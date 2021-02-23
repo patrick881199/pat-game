@@ -1,9 +1,10 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import parse from "html-react-parser";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useHistory } from "react-router-dom";
 import {
   faDesktop,
   faGamepad,
@@ -12,7 +13,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { faPlaystation, faXbox } from "@fortawesome/free-brands-svg-icons";
 import { faStar as eStar } from "@fortawesome/free-regular-svg-icons";
-
+import { SET_RETURNED_FALSE } from "../store/types";
 const GameDetail = () => {
   const playstation = <FontAwesomeIcon icon={faPlaystation} />;
   const xbox = <FontAwesomeIcon icon={faXbox} />;
@@ -67,8 +68,19 @@ const GameDetail = () => {
     }
   }
 
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const shadowClickHandler = (e) => {
+    if (e.target.classList.contains("Shadow")) {
+      dispatch({
+        type: SET_RETURNED_FALSE,
+      });
+      history.push(`/`);
+    }
+  };
+
   return (
-    <StyledGameDetail>
+    <StyledGameDetail className="Shadow" onClick={(e) => shadowClickHandler(e)}>
       <Content>
         <Title>
           <div className="info">
