@@ -3,18 +3,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { getGames } from "../store/actions/gamesAction";
 import { getGameDetail } from "../store/actions/gameDetailAction";
 import styled from "styled-components";
-import { motion, AnimateSharedLayout, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 import { Link, useLocation } from "react-router-dom";
 import GameDetail from "./GameDetail";
 import { imageResize } from "../util";
 import Loading from "./Loading";
 import { pageAnimation, scale } from "../animation";
+import Nav from "./Nav";
 
 const Home = () => {
   const dispatch = useDispatch();
   const gamesList = useSelector((state) => state.gamesList);
-  const { upcomingGames, newGames, popularGames } = gamesList;
+  const { upcomingGames, newGames, popularGames, searchGames } = gamesList;
 
   const gameInfo = useSelector((state) => state.gameInfo);
   const gameDetailReady = gameInfo.returned;
@@ -34,6 +35,8 @@ const Home = () => {
           key={game.id}
           onClick={() => clickCardHandler(game.id)}
           variants={scale}
+          initial="hidden"
+          animate="show"
         >
           <Link to={`/game/${game.id}`}>
             <h3>{game.name}</h3>
@@ -54,6 +57,12 @@ const Home = () => {
   const path = useLocation().pathname;
   const isGameDetailPath = path.includes("game");
 
+  const SearchSection = () => (
+    <>
+      <h2>Searching Results</h2>
+      <Cards>{gameList(searchGames)}</Cards>
+    </>
+  );
   return (
     <>
       {!isGameDetailPath ? "" : gameDetailReady ? <GameDetail /> : <Loading />}
@@ -63,6 +72,8 @@ const Home = () => {
         initial="hidden"
         animate="show"
       >
+        <Nav />
+        {searchGames.length > 0 ? <SearchSection /> : ""}
         <h2>Upcoming Games</h2>
         <Cards>{upcomingGamesSection}</Cards>
         <h2>Popular Games</h2>

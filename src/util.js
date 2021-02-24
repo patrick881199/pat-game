@@ -1,4 +1,7 @@
 export const imageResize = (url, size) => {
+  if (!url) {
+    return;
+  }
   const pattern = /media\/games/;
   let index = 0;
   if (pattern.test(url)) {

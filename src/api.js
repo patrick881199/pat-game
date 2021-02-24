@@ -36,3 +36,7 @@ export const gameDetailURL = (id) => `https://api.rawg.io/api/games/${id}`;
 //https://api.rawg.io/api/games/303576/screenshots
 export const gameScreenshotURL = (id) =>
   `https://api.rawg.io/api/games/${id}/screenshots`;
+
+//https://api.rawg.io/api/games?search=%22evil%22
+export const gameSearchURL = (name) =>
+  `https://api.rawg.io/api/games?page_size=10&search=${name}&ordering=-released`;
