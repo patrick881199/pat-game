@@ -117,6 +117,7 @@ const StyledGameDetail = styled(motion.div)`
 `;
 
 const Content = styled(motion.div)`
+  border-radius: 2rem;
   background-color: white;
   width: 70%;
   margin: auto;
